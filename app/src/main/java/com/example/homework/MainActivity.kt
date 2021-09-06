@@ -14,23 +14,26 @@ class MainActivity : AppCompatActivity() {
         val inputNumber: EditText = findViewById(R.id.editTextNumber);
         val resultFieldText:TextView = findViewById(R.id.resultField);
 
+        // выпадающеее меню
+        val spinnerItemsToChoose: Spinner = findViewById(R.id.spinner);
+
         // массив вариант
         val itemsToChoose = arrayListOf("Фаренгейты", "Кельвины", "Реомюра");
 
-        // Заполняем варианты из массива
         val adapter: ArrayAdapter<String> = ArrayAdapter<String>(
                 this, android.R.layout.simple_list_item_1, itemsToChoose
         );
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-        val spinnerItemsToChoose: Spinner = findViewById(R.id.spinner);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spinnerItemsToChoose.adapter = adapter;
 
         convertButton.setOnClickListener() {
+            // очищаем поле
             resultFieldText.text = "";
             val selected: String = spinnerItemsToChoose.selectedItem.toString()
 
+            // проверка на пустоту
             if(inputNumber.text.toString().trim().isEmpty()) {
                 Toast.makeText(this, "Введите градусы!", Toast.LENGTH_SHORT).show();
             }
@@ -42,8 +45,8 @@ class MainActivity : AppCompatActivity() {
         
     }
     private fun convert(selected: String, numberEditText: Int, resultFieldText: TextView) {
-        val convert = ConvertClass(numberEditText, selected);
-        val result = convert.convertCelsius(numberEditText, selected);
+        val convertValue = ConvertClass(numberEditText, selected);
+        val result = convertValue.convertCelsius(numberEditText, selected);
         resultFieldText.text = result.toString();
     }
 }
